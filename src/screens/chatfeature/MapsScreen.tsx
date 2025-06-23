@@ -13,10 +13,21 @@ import axios from 'axios';
 import { GOOGLE_API_KEY } from '@env';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { getDistance } from 'geolib';
 
+type RootStackParamList = {
+  NearbyTherapistScreen: undefined;
+  ClinicDetails: { place: any }; // ✅ You can replace `any` with your proper place type
+};
+
+type NearbyTherapistScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'NearbyTherapistScreen'
+>;
+
 export default function NearbyTherapistScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NearbyTherapistScreenNavigationProp>();
 
   const [location, setLocation] = useState<Location.LocationObjectCoords | null>(null);
   const [places, setPlaces] = useState<any[]>([]);
@@ -38,16 +49,16 @@ export default function NearbyTherapistScreen() {
       const res = await axios.get(url);
 
       if (res.data.status === 'OK') {
-        // Add computed distance (in km) to each place
         const withDistance = res.data.results.map((place: any) => ({
           ...place,
-          distance: getDistance(
-            { latitude: location.latitude, longitude: location.longitude },
-            {
-              latitude: place.geometry.location.lat,
-              longitude: place.geometry.location.lng,
-            }
-          ) / 1000, // convert meters to km
+          distance:
+            getDistance(
+              { latitude: location.latitude, longitude: location.longitude },
+              {
+                latitude: place.geometry.location.lat,
+                longitude: place.geometry.location.lng,
+              }
+            ) / 1000, // meters to km
         }));
         setPlaces(withDistance);
       } else {
@@ -82,7 +93,7 @@ export default function NearbyTherapistScreen() {
       <Ionicons name="location-sharp" size={28} color="#0077b6" style={{ marginRight: 10 }} />
       <View style={{ flex: 1 }}>
         <Text style={styles.placeName}>{item.name}</Text>
-        <Text>Rating:⭐️ {item.rating ? item.rating.toFixed(1) : 'N/A'}</Text>
+        <Text>Rating: ⭐️ {item.rating ? item.rating.toFixed(1) : 'N/A'}</Text>
         <Text>Distance: {item.distance ? item.distance.toFixed(2) : '?'} km</Text>
       </View>
       <TouchableOpacity

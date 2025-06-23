@@ -9,15 +9,18 @@ import {
   KeyboardAvoidingView,
   Platform,
   ActivityIndicator,
+  type ScrollView as RNScrollView, // alias if you want clarity
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { getGeminiResponse, ChatMessage } from './../../api/geminiApi';
 
 export default function AIChatScreen() {
+  // ✅ Use correct ref type:
+  const scrollViewRef = useRef<RNScrollView>(null);
+
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const scrollViewRef = useRef<ScrollView>(null);
 
   const handleSend = async () => {
     const trimmed = input.trim();
@@ -32,7 +35,7 @@ export default function AIChatScreen() {
     setIsTyping(true);
 
     try {
-      const reply = await getGeminiResponse(newMessages); // Ensure it returns plain string
+      const reply = await getGeminiResponse(newMessages);
       setMessages([...newMessages, { text: reply, sender: 'model' }]);
     } catch (error) {
       console.error('Error getting response:', error);
@@ -45,13 +48,12 @@ export default function AIChatScreen() {
     }
   };
 
-  // ✅ Correct: key on Fragment, not on Text
   const renderBotMessage = (text: string) => {
     const parts = text.split(/(\*\*.*?\*\*)/g);
     return parts.map((part, idx) => {
       const isBold = part.startsWith('**') && part.endsWith('**');
       return (
-        <React.Fragment key={idx}>
+        <React.Fragment key={`part-${idx}`}>
           <Text style={isBold ? styles.boldText : styles.normalText}>
             {isBold ? part.slice(2, -2) : part}
           </Text>
@@ -70,34 +72,36 @@ export default function AIChatScreen() {
         <ScrollView
           style={styles.chatBox}
           contentContainerStyle={styles.chatContent}
-          ref={scrollViewRef}
+          ref={scrollViewRef} // ✅ Safe now!
           onContentSizeChange={() =>
             scrollViewRef.current?.scrollToEnd({ animated: true })
           }
           showsVerticalScrollIndicator={false}
         >
-          {messages.map((msg, idx) => (
-            <View
-              key={`${msg.sender}-${idx}`}
-              style={[
-                styles.messageBubble,
-                msg.sender === 'model' ? styles.botBubble : styles.userBubble,
-              ]}
-            >
-              {msg.sender === 'model' ? (
-                <Text style={styles.botText}>{renderBotMessage(msg.text)}</Text>
-              ) : (
-                <Text style={styles.userText}>{msg.text}</Text>
-              )}
-            </View>
-          ))}
+          <View>
+            {messages.map((msg, idx) => (
+              <View
+                key={`msg-${idx}`}
+                style={[
+                  styles.messageBubble,
+                  msg.sender === 'model' ? styles.botBubble : styles.userBubble,
+                ]}
+              >
+                {msg.sender === 'model' ? (
+                  <Text style={styles.botText}>{renderBotMessage(msg.text)}</Text>
+                ) : (
+                  <Text style={styles.userText}>{msg.text}</Text>
+                )}
+              </View>
+            ))}
 
-          {isTyping && (
-            <View style={[styles.messageBubble, styles.botBubble]}>
-              <Text style={styles.botText}>KYNTRA is typing...</Text>
-              <ActivityIndicator size="small" color="#333" style={{ marginTop: 5 }} />
-            </View>
-          )}
+            {isTyping && (
+              <View style={[styles.messageBubble, styles.botBubble]}>
+                <Text style={styles.botText}>KYNTRA is typing...</Text>
+                <ActivityIndicator size="small" color="#333" style={{ marginTop: 5 }} />
+              </View>
+            )}
+          </View>
         </ScrollView>
       </View>
 
@@ -111,7 +115,7 @@ export default function AIChatScreen() {
           autoCorrect
           returnKeyType="send"
           onSubmitEditing={handleSend}
-          editable={!isTyping} // Disable input while typing
+          editable={!isTyping}
         />
         <TouchableOpacity
           onPress={handleSend}

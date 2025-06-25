@@ -24,17 +24,17 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../../chatfeature/peofilescreen";  // Example: Home with Logout
 import AIChatScreen from "../../chatfeature/AIChatScreen";
 import MapsNavigation from "./MapsNavigation";
-import Detection from "../../DetectionFlow/DetectionScreen"
+import DetectionStack from "../../../navigation/DetectionStack"
 
 const Tab = createBottomTabNavigator();
 
 export default function AppNavigator() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="AI Chat" component={AIChatScreen} />
-      <Tab.Screen name="Maps" component={MapsNavigation} />
-      <Tab.Screen name="Detection" component={Detection} />
-    </Tab.Navigator>
-  );
+		<Tab.Navigator>
+			<Tab.Screen name="Home" component={HomeScreen} />
+			<Tab.Screen name="AI Chat" component={AIChatScreen} />
+			<Tab.Screen name="Maps" component={MapsNavigation} />
+			<Tab.Screen name="Detection" component={DetectionStack} />
+		</Tab.Navigator>
+	);
 }

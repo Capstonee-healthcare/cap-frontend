@@ -37,7 +37,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {user && (
           <Stack.Screen name="MainTabs">
-            {() => <AppNavigator user={user} />}
+            {() => <AppNavigator />}
           </Stack.Screen>
         )}
         {!user && (

@@ -4,7 +4,7 @@
     "strict": true,
     "jsx": "react-native",
     "module": "esnext",   
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   }

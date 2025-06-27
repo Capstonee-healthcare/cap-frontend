@@ -11,7 +11,7 @@ export default function BodyPartSelectScreen() {
 	};
 
 	return (
-		<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+		<View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#fff" }}>
 			<Text>BodyPartSelectScreen</Text>
 			<Button title="Next" onPress={handleNext} />
 		</View>

@@ -25,18 +25,22 @@ import HomeScreen from "../../chatfeature/peofilescreen";  // Example: Home with
 import AIChatScreen from "../../chatfeature/AIChatScreen";
 import MapsNavigation from "./MapsNavigation";
 import DetectionStack from "../../../navigation/DetectionStack"
-import ExerciseStack from "../../../navigation/ExerciseStack";
+import VideosStack from "../../../navigation/VideosStack"; // 🔥 Changed from ExerciseStack to VideosStack
+import CustomTabBar from "../../../components/CustomTabBar"; // 🔥 Add this import
 
 const Tab = createBottomTabNavigator();
 
 export default function AppNavigator() {
   return (
-		<Tab.Navigator>
+		<Tab.Navigator 
+			screenOptions={{ headerShown: false }}
+			tabBar={(props) => <CustomTabBar {...props} />} // 🔥 Add this line
+		>
 			<Tab.Screen name="Home" component={HomeScreen} />
-			<Tab.Screen name="AI Chat" component={AIChatScreen} />
+			<Tab.Screen name="AIChat" component={AIChatScreen} />
 			<Tab.Screen name="Maps" component={MapsNavigation} />
 			<Tab.Screen name="Detection" component={DetectionStack} />
-			<Tab.Screen name="Video" component={ExerciseStack} />
+			<Tab.Screen name="Videos" component={VideosStack} />
 		</Tab.Navigator>
 	);
 }

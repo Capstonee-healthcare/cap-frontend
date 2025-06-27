@@ -7,16 +7,24 @@ const ExerciseScreen = ({ navigation }: any) => {
 	return (
 		<ScrollView>
 			<View style={{ marginTop: 40 }}>
+				{/* Video Library Card */}
 				<ExerciseCard
+					title="Video Library"
+					subtitle="Exercise Videos by Body Part"
+					image={require("../../../assets/shoulder.png")}
+					onPress={() => navigation.navigate("VideoLibrary")}
+				/>
+				
+				{/* <ExerciseCard
 					title="Shoulder"
 					subtitle="Mobility & Strength"
 					image={require("../../../assets/shoulder.png")}
 					onPress={() =>
 						navigation.navigate("ExerciseDetail", { category: "shoulder" })
 					}
-				/>
+				/> */}
 			</View>
-			<ExerciseCard
+			{/* <ExerciseCard
 				title="Biceps"
 				subtitle="Tone and Build"
 				image={require("../../../assets/shoulder.png")}
@@ -31,7 +39,7 @@ const ExerciseScreen = ({ navigation }: any) => {
 				onPress={() =>
 					navigation.navigate("ExerciseDetail", { category: "stretching" })
 				}
-			/>
+			/> */}
 		</ScrollView>
 	);
 };

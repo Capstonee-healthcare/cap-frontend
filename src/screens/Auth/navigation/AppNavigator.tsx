@@ -21,7 +21,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import HomeScreen from "../../chatfeature/peofilescreen";  // Example: Home with Logout
+import HomeScreen from "../../chatfeature/Homescreen";  // Example: Home with Logout
 import AIChatScreen from "../../chatfeature/AIChatScreen";
 import MapsNavigation from "./MapsNavigation";
 import DetectionStack from "../../../navigation/DetectionStack"

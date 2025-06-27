@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  Image,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import * as Location from 'expo-location';
@@ -18,7 +19,7 @@ import { getDistance } from 'geolib';
 
 type RootStackParamList = {
   NearbyTherapistScreen: undefined;
-  ClinicDetails: { place: any }; // ✅ You can replace `any` with your proper place type
+  ClinicDetails: { place: any }; // Replace `any` with proper type if you have one
 };
 
 type NearbyTherapistScreenNavigationProp = NativeStackNavigationProp<
@@ -88,22 +89,35 @@ export default function NearbyTherapistScreen() {
 
   const handleSearch = () => fetchPlaces();
 
-  const renderItem = ({ item }: { item: any }) => (
-    <View style={styles.card}>
-      <Ionicons name="location-sharp" size={28} color="#0077b6" style={{ marginRight: 10 }} />
-      <View style={{ flex: 1 }}>
-        <Text style={styles.placeName}>{item.name}</Text>
-        <Text>Rating: ⭐️ {item.rating ? item.rating.toFixed(1) : 'N/A'}</Text>
-        <Text>Distance: {item.distance ? item.distance.toFixed(2) : '?'} km</Text>
+  const renderItem = ({ item }: { item: any }) => {
+    const photoReference = item.photos?.[0]?.photo_reference;
+    const photoUrl = photoReference
+      ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${GOOGLE_API_KEY}`
+      : null;
+
+    return (
+      <View style={styles.card}>
+        {photoUrl ? (
+          <Image source={{ uri: photoUrl }} style={styles.placeImage} />
+        ) : (
+          <Ionicons name="location-sharp" size={50} color="#0077b6" style={styles.placeImage} />
+        )}
+
+        <View style={{ flex: 1, marginLeft: 30 }}>
+          <Text style={styles.placeName}>{item.name}</Text>
+          <Text>Rating: ⭐️ {item.rating ? item.rating.toFixed(1) : 'N/A'}</Text>
+          <Text>Distance: {item.distance ? item.distance.toFixed(2) : '?'} km</Text>
+        </View>
+
+        <TouchableOpacity
+          style={styles.detailsButton}
+          onPress={() => navigation.navigate('ClinicDetails', { place: item })}
+        >
+          <Text style={{ color: '#fff', fontWeight: 'bold' }}>Details</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.detailsButton}
-        onPress={() => navigation.navigate('ClinicDetails', { place: item })}
-      >
-        <Text style={{ color: '#fff', fontWeight: 'bold' }}>Details</Text>
-      </TouchableOpacity>
-    </View>
-  );
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -185,6 +199,11 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 12,
     backgroundColor: '#f9f9f9',
+  },
+  placeImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
   },
   placeName: {
     fontSize: 16,

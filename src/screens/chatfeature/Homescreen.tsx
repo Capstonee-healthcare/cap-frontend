@@ -131,9 +131,7 @@ export default function HomeScreen() {
         <TouchableOpacity
           style={styles.button}
           onPress={() =>
-            navigation.navigate("Maps" as never, {
-              screen: "NearbyTherapistScreen",
-            } as never)
+            navigation.navigate("Maps" ,{screen:"NearbyTherapistScreen"})
           }
         >
           <View style={{ alignItems: "center" }}>

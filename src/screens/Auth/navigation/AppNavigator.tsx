@@ -25,16 +25,18 @@ import HomeScreen from "../../chatfeature/peofilescreen";  // Example: Home with
 import AIChatScreen from "../../chatfeature/AIChatScreen";
 import MapsNavigation from "./MapsNavigation";
 import DetectionStack from "../../../navigation/DetectionStack"
+import ExerciseStack from "../../../navigation/ExerciseStack";
 
 const Tab = createBottomTabNavigator();
 
 export default function AppNavigator() {
   return (
-		<Tab.Navigator>
+		<Tab.Navigator screenOptions={{ headerShown: false }}>
 			<Tab.Screen name="Home" component={HomeScreen} />
 			<Tab.Screen name="AI Chat" component={AIChatScreen} />
 			<Tab.Screen name="Maps" component={MapsNavigation} />
 			<Tab.Screen name="Detection" component={DetectionStack} />
+			<Tab.Screen name="Video" component={ExerciseStack} />
 		</Tab.Navigator>
 	);
 }

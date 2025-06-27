@@ -27,10 +27,12 @@
 		"expo-status-bar": "2.2.3",
 		"firebase": "11.9.1",
 		"geolib": "3.3.4",
+		"lottie-react-native": "7.2.2",
 		"react": "19.0.0",
 		"react-native": "0.79.2",
 		"react-native-dotenv": "3.4.11",
 		"react-native-gesture-handler": "2.24.0",
+		"react-native-maps": "1.20.1",
 		"react-native-reanimated": "3.17.4",
 		"react-native-safe-area-context": "5.4.0",
 		"react-native-screens": "4.10.0",
@@ -38,8 +40,7 @@
 		"react-native-vision-camera": "4.6.4",
 		"react-native-vision-camera-face-detector": "1.7.2",
 		"react-native-webview": "13.13.5",
-		"react-native-worklets-core": "1.5.0",
-		"react-native-maps": "1.20.1"
+		"react-native-worklets-core": "1.5.0"
 	},
 	"devDependencies": {
 		"@babel/core": "7.27.4",

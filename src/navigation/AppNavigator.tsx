@@ -7,7 +7,7 @@ import ExerciseStack from "./ExerciseStack";
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => (
-	<Tab.Navigator screenOptions={{ headerShown: false }}>
+	<Tab.Navigator screenOptions={{ headerShown: true }}>
 		<Tab.Screen name="Detection" component={DetectionStack} />
 		<Tab.Screen name="Exercise" component={ExerciseStack} />
 	</Tab.Navigator>

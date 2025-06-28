@@ -68,7 +68,7 @@ export default function App() {
 					) : !termsAccepted ? (
 						<Stack.Screen name="Terms" component={TermsAndConditionsScreen} />
 					) : (
-						<Stack.Screen name="Home" component={AppNavigator} />
+						<Stack.Screen name="MainApp" component={AppNavigator} />
 					)}
 				</Stack.Navigator>
 			</NavigationContainer>

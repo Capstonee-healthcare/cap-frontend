@@ -75,7 +75,7 @@ export default function ExerciseSummaryScreen() {
 
 			<TouchableOpacity
 				style={styles.button}
-				onPress={() => navigation.navigate("Home")} // or any other screen
+				onPress={() => navigation.navigate("HomeTab")} // or any other screen
 			>
 				<Text style={styles.buttonText}>Finish</Text>
 			</TouchableOpacity>

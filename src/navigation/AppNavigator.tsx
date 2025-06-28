@@ -18,7 +18,7 @@ const AppNavigator = () => (
 		tabBar={(props) => <CustomTabBar {...props} />}
 	>
 		<Tab.Screen 
-			name="Home" 
+			name="HomeTab" 
 			component={HomeStack}
 			options={{
 				tabBarLabel: "Home",
